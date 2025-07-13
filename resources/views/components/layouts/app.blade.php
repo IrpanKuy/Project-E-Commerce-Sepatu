@@ -13,11 +13,15 @@
 </head>
 
 <body class="font-sans bg-gray-50">
+
     @include('partials.header')
-    @yield('content')
-    @vite('resources/js/app.js')
-    @livewireScripts
+
+    {{ $slot }}
+
     @include('partials.footer')
+
+    @livewireScripts
+    @vite('resources/js/app.js')
 </body>
 
 </html>

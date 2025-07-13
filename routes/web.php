@@ -2,6 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('livewire.pages.home');
-});
+use App\Livewire\Pages\Home;
+
+Route::get('/', Home::class);

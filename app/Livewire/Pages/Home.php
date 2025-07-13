@@ -5,33 +5,20 @@ namespace App\Livewire\Pages;
 use Livewire\Component;
 use App\Models\Category;
 use App\Models\Product;
+use livewire\WithPagination;
 
 class Home extends Component
 {
     public $categories;
-    public $selectedCategory = null;
-    public $products = [];
-    public $newestProducts = [];
+    public $newestProducts;
+    public $products;
 
     public function mount()
     {
-        $this->categories = Category::all();
+        $this->categories = Category::latest()->take(8)->get();
         $this->newestProducts = Product::latest()->take(8)->get();
-        $this->loadProducts();
-    }
+        $this->products = Product::with('category')->withMin('variants', 'price')->latest()->get();
 
-    public function updatedSelectedCategory()
-    {
-        $this->loadProducts();
-    }
-
-    public function loadProducts()
-    {
-        if ($this->selectedCategory) {
-            $this->products = Product::where('category_id', $this->selectedCategory)->get();
-        } else {
-            $this->products = Product::all();
-        }
     }
 
     public function render()
